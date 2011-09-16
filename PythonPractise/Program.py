@@ -3,10 +3,12 @@ import subprocess
 import sys
 import urllib
 
-returnedLines = subprocess.Popen("TestProgram.exe 10 100", stdout=subprocess.PIPE)
+start = int(sys.stdin.readline())
+end = int(sys.stdin.readline())
 
+usercode = subprocess.Popen("TestProgram.exe " + str(start) + " " + str(end), stdout=subprocess.PIPE)
 while True:
-    line = returnedLines.stdout.readline() 
+    line = usercode.stdout.readline() 
     if line:
         print(int(line))
     else:
