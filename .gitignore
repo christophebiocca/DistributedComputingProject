@@ -1,0 +1,8 @@
+*.sdf
+*.sln
+*.suo
+*.exe
+*.pyproj
+*.csproj
+*/bin/*
+*/obj/*
