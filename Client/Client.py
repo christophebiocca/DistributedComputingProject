@@ -17,6 +17,5 @@ while True:
         if line:
             data = urllib.parse.urlencode([("newCustCode", False), ("matchedValue", int(line))]).encode("utf-8")
             postResponse = urllib.request.urlopen("http://localhost:1080", data).read()
-            print(postResponse)
         else:
             break

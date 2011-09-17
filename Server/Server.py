@@ -7,15 +7,22 @@ import urllib
 
 def MyClosure():
     processed = [0]
+    results = []
 
     class MyRequestHandler(http.server.BaseHTTPRequestHandler):
         def do_GET(self):
-            self.send_response(200)
-            self.send_header('Content-Type', 'text/plain')
-            self.end_headers()
-            range = (str(processed[0]) + "\n" + str(processed[0] + 10)).encode("utf-8")
-            processed[0] += 10
-            self.wfile.write(range)
+            if self.path.endswith("results.txt"):
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/plain')
+                self.end_headers()
+                self.wfile.write(str(results).encode("utf-8"))
+            else:
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/plain')
+                self.end_headers()
+                range = (str(processed[0]) + "\n" + str(processed[0] + 10)).encode("utf-8")
+                processed[0] += 10
+                self.wfile.write(range)
             return
 
         def do_POST(self):
@@ -25,14 +32,10 @@ def MyClosure():
                 environ={'REQUEST_METHOD':'POST',
                          'CONTENT_TYPE':self.headers['Content-Type'],
                          })
-            results = form.getvalue("matchedValue")
+            results.append(form.getvalue("matchedValue"))
 
-            self.send_response(301)
+            self.send_response(200)
             self.end_headers()
-            
-            length = int(self.headers.getheader('content-length'))
-            postvars = cgi.parse_qs(self.rfile.read(length))
-            print(postvars)
             self.wfile.write("<HTML>POST OK</HTML>".encode("utf-8"))
 
     return MyRequestHandler
