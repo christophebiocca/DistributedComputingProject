@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import subprocess
 import sys
 import http
@@ -40,7 +41,7 @@ def MyClosure():
 
     return MyRequestHandler
 
-server = http.server.HTTPServer(('', 1080), MyClosure())
+server = http.server.HTTPServer(('', 80), MyClosure())
 print("Started server")
 server.serve_forever()
 print("end")
