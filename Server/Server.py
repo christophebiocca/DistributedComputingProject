@@ -32,6 +32,7 @@ def MyClosure():
                 environ={'REQUEST_METHOD':'POST',
                          'CONTENT_TYPE':self.headers['Content-Type'],
                          })
+            print(form)
             results.append(form.getvalue("matchedValue"))
 
             self.send_response(200)
@@ -43,4 +44,3 @@ def MyClosure():
 server = http.server.HTTPServer(('', 1080), MyClosure())
 print("Started server")
 server.serve_forever()
-print("end")

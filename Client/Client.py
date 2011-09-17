@@ -4,9 +4,10 @@ import sys
 import urllib
 import string
 
+serverUrl = "http://localhost:1080/"
 
 while True:
-    range = list(map(int, urllib.request.urlopen("http://localhost:1080").read().split()))
+    range = list(map(int, urllib.request.urlopen(serverUrl).read().split()))
 
     start = range[0]
     end = range[1]
@@ -16,6 +17,6 @@ while True:
         line = usercode.stdout.readline() 
         if line:
             data = urllib.parse.urlencode([("newCustCode", False), ("matchedValue", int(line))]).encode("utf-8")
-            postResponse = urllib.request.urlopen("http://localhost:1080", data).read()
+            postResponse = urllib.request.urlopen(serverUrl, data).read()
         else:
             break
