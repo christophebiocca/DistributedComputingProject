@@ -13,7 +13,7 @@ namespace TestProgram
             int end = Convert.ToInt32(args[1]);
             for (int i = start; i < end; i++)
             {
-                if (i % 2 == 0)
+                if (i % 2 == 1)
                 {
                     Console.WriteLine(i);
                 }
