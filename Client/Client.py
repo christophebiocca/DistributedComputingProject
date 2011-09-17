@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3.2
 import urllib.request
 import subprocess
 import sys
