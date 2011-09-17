@@ -4,7 +4,7 @@ import sys
 import urllib
 import string
 
-serverUrl = "http://localhost:1080/"
+serverUrl = "http://jknielse.twilightparadox.com:80/"
 
 while True:
     range = list(map(int, urllib.request.urlopen(serverUrl).read().split()))
