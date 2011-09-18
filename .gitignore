@@ -5,4 +5,6 @@
 *.csproj
 */bin/*
 */obj/*
+*.swp
+*/__pycache__/*
 *~
