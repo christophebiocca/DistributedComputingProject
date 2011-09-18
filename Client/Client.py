@@ -4,6 +4,7 @@ if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] 
     print("The Computing Collective regrets to inform you that your version of python is too low to be supported")
     exit()
 
+import socket
 import urllib.request
 import subprocess
 import sys
@@ -11,6 +12,7 @@ import urllib
 import string
 import os
 import pickle
+import http
 
 serverUrl = "http://jknielse.twilightparadox.com/"
 #serverUrl = "http://localhost:1080/"
@@ -44,24 +46,24 @@ while True:
     try:
         if os.path.isfile(customerFile):
             range = getNewRange()
-    
+
             start = range[0]
             end = range[1]
-    
+
             if os.name == "posix" or os.name == "mac":
                 usercode = subprocess.Popen(["./" + customerFile, str(start), str(end)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
             elif os.name == "nt": 
                 usercode = subprocess.Popen(customerFile + " " + str(start) + " " + str(end), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-    
+
             data = []
             while True:
                 line = usercode.stdout.readline() 
                 if not line:
                     break
                 data.append(int(line))
-    
+
             sendResults(data)
         else:
             downloadNewProgram()
-    except:
+    except(urllib.error.URLError,socket.error,http.client.BadStatusLine):
         pass
