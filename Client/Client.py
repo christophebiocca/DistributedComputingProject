@@ -16,9 +16,15 @@ def getNewProgram():
     file.write(response)
     file.close()
 
+def getNewRange():
+    data = urllib.parse.urlencode([("request", "newRange")]).encode("utf-8")
+    response = urllib.request.urlopen(serverUrl, data).read()
+    return list(map(int, response.split()))
+
 while True:
     if os.path.isfile(customerFile):
-        range = list(map(int, urllib.request.urlopen(serverUrl).read().split()))
+        range = getNewRange()
+
         start = range[0]
         end = range[1]
 
@@ -28,7 +34,7 @@ while True:
             line = usercode.stdout.readline() 
             if line:
                 data = urllib.parse.urlencode([("request", "reportValue"), ("matchedValue", int(line))]).encode("utf-8")
-                postResponse = urllib.request.urlopen(serverUrl, data).read()
+                postResponse = urllib.request.urlopen(serverUrl, data)
             else:
                 break
     else:

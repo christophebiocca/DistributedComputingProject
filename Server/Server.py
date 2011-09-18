@@ -17,13 +17,6 @@ def MyClosure():
                 self.send_header('Content-Type', 'text/plain')
                 self.end_headers()
                 self.wfile.write(str(results).encode("utf-8"))
-            else:
-                self.send_response(200)
-                self.send_header('Content-Type', 'text/plain')
-                self.end_headers()
-                range = (str(processed[0]) + "\n" + str(processed[0] + 10)).encode("utf-8")
-                processed[0] += 10
-                self.wfile.write(range)
             return
 
         def do_POST(self):
@@ -35,7 +28,6 @@ def MyClosure():
                          })
 
             requestType = form.getvalue("request")
-            print(requestType)
             if requestType == "newProgram":
                 self.send_response(200)
                 self.send_header("Content-Type", "application/octet-stream")
@@ -52,7 +44,6 @@ def MyClosure():
                 results.append(form.getvalue("matchedValue"))
                 self.send_response(200)
                 self.end_headers()
-                self.wfile.write("<HTML>POST OK</HTML>".encode("utf-8"))
 
     return MyRequestHandler
 
