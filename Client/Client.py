@@ -1,3 +1,10 @@
+import sys
+
+if sys.version_info[0] < 3 | (sys.version_info[0] == 3 & sys.version_info[1] < 2):
+    
+    print("The Computing Collective regrets to inform you that your version of python is too low to be supported")
+    exit()
+
 import urllib.request
 import subprocess
 import sys
@@ -5,7 +12,7 @@ import urllib
 import string
 import os
 
-serverUrl = "http://129.97.224.134/"
+serverUrl = "http://jknielse.twilightparadox.com/"
 serverUrl = "http://localhost:1080/"
 customerFile = "TestProgram.exe"
 
