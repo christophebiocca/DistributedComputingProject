@@ -1,11 +1,13 @@
 *.sdf
 *.sln
 *.suo
+*.swn
+*.swo
 *.pyproj
 *.csproj
 */bin/*
 */obj/*
 *.swp
 */__pycache__/*
-*~
 */dist/*
+*~
