@@ -47,7 +47,7 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
 def main():
-    server = http.server.HTTPServer(('', 1080), MyRequestHandler)
+    server = http.server.HTTPServer(('', 80), MyRequestHandler)
     print("Started server")
     server.serve_forever()
 
