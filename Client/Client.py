@@ -13,13 +13,13 @@ import os
 import pickle
 
 serverUrl = "http://jknielse.twilightparadox.com/"
-serverUrl = "http://localhost:1080/"
+#serverUrl = "http://localhost:1080/"
 
 if os.name == "posix":
     customerFile = "CrossPlatformTestProgram.linux"
-elif os.name == "nt"
+elif os.name == "nt":
     customerFile = "CrossPlatformTestProgram.exe"
-elif os.name == "mac"
+elif os.name == "mac":
     customerFile = "CrossPlatformTestProgram.mac"
 
 
