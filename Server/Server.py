@@ -4,6 +4,7 @@ import http
 import http.server
 import cgi
 import urllib
+import pickle
 
 def MyClosure():
     processed = [0]
@@ -32,12 +33,26 @@ def MyClosure():
                 environ={'REQUEST_METHOD':'POST',
                          'CONTENT_TYPE':self.headers['Content-Type'],
                          })
-            print(form)
-            results.append(form.getvalue("matchedValue"))
 
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write("<HTML>POST OK</HTML>".encode("utf-8"))
+            requestType = form.getvalue("request")
+            print(requestType)
+            if requestType == "newProgram":
+                self.send_response(200)
+                self.send_header("Content-Type", "application/octet-stream")
+                self.end_headers()
+                self.wfile.write(open("TestProgram.exe", "rb").read()) 
+            elif requestType == "newRange":
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/plain')
+                self.end_headers()
+                range = (str(processed[0]) + "\n" + str(processed[0] + 10)).encode("utf-8")
+                processed[0] += 10
+                self.wfile.write(range)
+            elif requestType == "reportValue":
+                results.append(form.getvalue("matchedValue"))
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write("<HTML>POST OK</HTML>".encode("utf-8"))
 
     return MyRequestHandler
 
