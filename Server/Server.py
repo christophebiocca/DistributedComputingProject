@@ -37,7 +37,7 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             callableMethodList = list(filter(callable,memberList))
             
             #grab the requested method
-            requestedMethod = list(filter(lambda x:x.__name__ == requestType, methodList))[0]
+            requestedMethod = list(filter(lambda x:x.__name__ == requestType, callableMethodList))[0]
 
             #call it:
             requestedMethod(self, form)
