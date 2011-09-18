@@ -27,8 +27,27 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
                         })
         
         requestType = form.getvalue("request")
+        
+        
         try:
-            list(filter(lambda x:x.__name__ == requestType, list(filter(callable,map(lambda x:getattr(PostRequestMethods, x), dir(PostRequestMethods))))))[0](self, form)
+            
+            
+
+            #grab a list of all of the names of the members of the PostRequestMethods module
+            memberListNames = dir(PostRequestMethods)
+            
+            #get the actual members in the list, rather than just strings reflecting the names
+            memberList = map(lambda x:getattr(PostRequestMethods, x), memberListNames)
+           
+            #filter out all but the methods of the member list (i.e. remove the variables)
+            methodList = list(filter(callable,memberList))
+            
+            #grab the requested method
+            requestedMethod = list(filter(lambda x:x.__name__ == requestType, methodList))[0]
+
+            #call it:
+            requestedMethod(self, form)
+
         except IndexError:
             print("Client attempted to call a method that doesn't exist: ", requestType)
 
