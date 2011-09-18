@@ -40,21 +40,24 @@ def sendResults(values):
     response = urllib.request.urlopen(serverUrl, data)
 
 while True:
-    if os.path.isfile(customerFile):
-        range = getNewRange()
+    try:
+        if os.path.isfile(customerFile):
+            range = getNewRange()
 
-        start = range[0]
-        end = range[1]
+            start = range[0]
+            end = range[1]
 
-        usercode = subprocess.Popen(customerFile + " " + str(start) + " " + str(end), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+            usercode = subprocess.Popen(customerFile + " " + str(start) + " " + str(end), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 
-        data = []
-        while True:
-            line = usercode.stdout.readline() 
-            if not line:
-                break
-            data.append(int(line))
+            data = []
+            while True:
+                line = usercode.stdout.readline() 
+                if not line:
+                    break
+                data.append(int(line))
 
-        sendResults(data)
-    else:
-        downloadNewProgram()
+            sendResults(data)
+        else:
+            downloadNewProgram()
+    except:
+        pass
