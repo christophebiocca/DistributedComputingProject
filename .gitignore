@@ -1,6 +1,8 @@
 *.sdf
 *.sln
 *.suo
+*.swn
+*.swo
 *.pyproj
 *.csproj
 */bin/*
