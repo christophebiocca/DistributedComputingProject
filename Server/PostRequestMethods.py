@@ -15,11 +15,11 @@ def newProgram(requestHandler, clientData):
     requestHandler.send_header("Content-Type", "application/octet-stream")
     requestHandler.end_headers()
     
-    if currentPlatform == "posix":
+    if clientPlatform == "posix":
         requestHandler.wfile.write(open("../DistributedProjects/" + currentProject + "/bin/" + currentProject + ".linux", "rb").read())
-    if currentPlatform == "nt":
+    if clientPlatform == "nt":
         requestHandler.wfile.write(open("../DistributedProjects/" + currentProject + "/bin/" + currentProject + ".exe", "rb").read())
-    if currentPlatform == "mac":
+    if clientPlatform == "mac":
         requestHandler.wfile.write(open("../DistributedProjects/" + currentProject + "/bin/" + currentProject + ".mac", "rb").read())
 
 def newRange(requestHandler, clientData):
