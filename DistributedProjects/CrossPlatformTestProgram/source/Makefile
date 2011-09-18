@@ -1,2 +1,2 @@
 all:
-	g++ PrimeTester.cc -mwin32 -o ../bin/TestProgram.linux
+	g++ PrimeTester.cc -o ../bin/CrossPlatformTestProgram.linux

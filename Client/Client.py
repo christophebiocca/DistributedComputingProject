@@ -22,13 +22,14 @@ elif os.name == "nt":
 elif os.name == "mac":
     customerFile = "CrossPlatformTestProgram.mac"
 
-
 def downloadNewProgram():
     file = open(customerFile, "wb")
     data = urllib.parse.urlencode([("request", "newProgram"),("platform",urllib.parse.quote_from_bytes(pickle.dumps(os.name)))]).encode("utf-8")
     response = urllib.request.urlopen(serverUrl, data).read()
     file.write(response)
     file.close()
+    if os.name == "posix":
+        os.chmod(customerFile, 777)
 
 def getNewRange():
     data = urllib.parse.urlencode([("request", "newRange")]).encode("utf-8")
@@ -46,7 +47,10 @@ while True:
         start = range[0]
         end = range[1]
 
-        usercode = subprocess.Popen(customerFile + " " + str(start) + " " + str(end), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+        if os.name == "posix" or os.name == "mac":
+            usercode = subprocess.Popen(["./" + customerFile, str(start), str(end)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+        elif os.name == "nt": 
+            usercode = subprocess.Popen(customerFile + " " + str(start) + " " + str(end), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 
         data = []
         while True:
