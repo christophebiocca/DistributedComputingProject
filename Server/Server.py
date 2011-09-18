@@ -15,9 +15,6 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(PostRequestMethods.state.displayData().encode("utf-8"))
 
-    def dispatch(self, method_name, *args, **kwargs):
-        return getattr(self, requestMapping[method_name])(*args, **kwargs)
-
     def do_POST(self):
         form = cgi.FieldStorage(
             fp=self.rfile, 

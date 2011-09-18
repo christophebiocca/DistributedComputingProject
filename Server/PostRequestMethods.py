@@ -1,6 +1,8 @@
 """Methods on the server that can be called from
 the client by sending a POST request with a "request"
 paramater that has a value of the name of the method"""
+import pickle
+import urllib
 
 import ServerState
 
@@ -20,10 +22,11 @@ def newRange(requestHandler, clientData):
     data = (str(range[0]) + "\n" + str(range[1])).encode("utf-8")
     requestHandler.wfile.write(data)
 
-def reportValue(requestHandler, clientData):
-    state.aggregateResult(clientData.getvalue("matchedValue"))
+def reportValues(requestHandler, clientData):
+    range = clientData.getvalue("computedRange")
+    matchingValues = pickle.loads(urllib.parse.unquote_to_bytes(clientData.getvalue("matchingValues")))
+
+    state.aggregateResults(matchingValues)
+
     requestHandler.send_response(200)
     requestHandler.end_headers()
-
-def giveMeEverythingTonight(requestHandler, clientData):
-    return state.results

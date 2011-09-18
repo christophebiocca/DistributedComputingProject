@@ -1,7 +1,6 @@
 import sys
 
-if sys.version_info[0] < 3 | (sys.version_info[0] == 3 & sys.version_info[1] < 2):
-    
+if sys.version_info[0] < 3 or (sys.version_info[0] == 3 and sys.version_info[1] < 2):
     print("The Computing Collective regrets to inform you that your version of python is too low to be supported")
     exit()
 
@@ -11,12 +10,13 @@ import sys
 import urllib
 import string
 import os
+import pickle
 
 serverUrl = "http://jknielse.twilightparadox.com/"
 serverUrl = "http://localhost:1080/"
 customerFile = "TestProgram.exe"
 
-def getNewProgram():
+def downloadNewProgram():
     file = open(customerFile, "wb")
     data = urllib.parse.urlencode([("request", "newProgram")]).encode("utf-8")
     response = urllib.request.urlopen(serverUrl, data).read()
@@ -28,6 +28,10 @@ def getNewRange():
     response = urllib.request.urlopen(serverUrl, data).read()
     return list(map(int, response.split()))
 
+def sendResults(values):
+    data = urllib.parse.urlencode([("request", "reportValues"), ("matchingValues", urllib.parse.quote_from_bytes(pickle.dumps(values)))]).encode("utf-8")
+    response = urllib.request.urlopen(serverUrl, data)
+
 while True:
     if os.path.isfile(customerFile):
         range = getNewRange()
@@ -37,12 +41,13 @@ while True:
 
         usercode = subprocess.Popen(customerFile + " " + str(start) + " " + str(end), stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 
+        data = []
         while True:
             line = usercode.stdout.readline() 
-            if line:
-                data = urllib.parse.urlencode([("request", "reportValue"), ("matchedValue", int(line))]).encode("utf-8")
-                postResponse = urllib.request.urlopen(serverUrl, data)
-            else:
+            if not line:
                 break
+            data.append(int(line))
+
+        sendResults(data)
     else:
-        getNewProgram()
+        downloadNewProgram()

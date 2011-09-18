@@ -4,8 +4,8 @@ class ServerState():
         self.processed = 0
         self.results = []
 
-    def aggregateResult(self, data):
-        self.results.append(data)
+    def aggregateResults(self, data):
+        self.results.extend(list(map(int, data)))
 
     def nextData(self):
         self.processed += 10
