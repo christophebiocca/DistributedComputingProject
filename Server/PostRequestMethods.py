@@ -19,7 +19,7 @@ def newRange(requestHandler, clientData):
     requestHandler.send_header('Content-Type', 'text/plain')
     requestHandler.end_headers()
     range = state.nextData()
-    data = (str(range[0]) + "\n" + str(range[1])).encode("utf-8")
+    data = (str(range[0]) + "\n" + str(range[1]) + "\n").encode("utf-8")
     requestHandler.wfile.write(data)
 
 def reportValues(requestHandler, clientData):
