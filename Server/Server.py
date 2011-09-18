@@ -27,9 +27,6 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
         
         
         try:
-            
-            
-
             #grab a list of all of the names of the members of the PostRequestMethods module
             memberListNames = dir(PostRequestMethods)
             
@@ -37,7 +34,7 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             memberList = map(lambda x:getattr(PostRequestMethods, x), memberListNames)
            
             #filter out all but the methods of the member list (i.e. remove the variables)
-            methodList = list(filter(callable,memberList))
+            callableMethodList = list(filter(callable,memberList))
             
             #grab the requested method
             requestedMethod = list(filter(lambda x:x.__name__ == requestType, methodList))[0]
