@@ -1,10 +1,6 @@
 *.sdf
-*.sln
-*.suo
 *.swn
 *.swo
-*.pyproj
-*.csproj
 */bin/*
 */obj/*
 *.swp
