@@ -4,6 +4,6 @@
 */bin/*
 */obj/*
 *.swp
-*/__pycache__/*
+*__pycache__/*
 */dist/*
 *~
