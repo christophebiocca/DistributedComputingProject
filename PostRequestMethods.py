@@ -27,8 +27,7 @@ def newWorkUnit(requestHandler, clientData):
     requestHandler.send_response(200)
     requestHandler.send_header('Content-Type', 'text/plain')
     requestHandler.end_headers()
-    range = state.nextData()
-    newUnit = WorkUnit.WorkUnit(range[0], range[1])
+    newUnit = state.nextWorkUnit()
     encodedData = urllib.parse.quote_from_bytes(pickle.dumps(newUnit)).encode("utf-8")
     requestHandler.wfile.write(encodedData)
 

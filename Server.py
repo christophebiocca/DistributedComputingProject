@@ -25,26 +25,24 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
         
         requestType = form.getvalue("request")
         
-        
-        try:
-            #grab a list of all of the names of the members of the PostRequestMethods module
-            memberListNames = dir(PostRequestMethods)
+        #grab a list of all of the names of the members of the PostRequestMethods module
+        memberListNames = dir(PostRequestMethods)
             
-            #get the actual members in the list, rather than just strings reflecting the names
-            memberList = map(lambda x:getattr(PostRequestMethods, x), memberListNames)
+        #get the actual members in the list, rather than just strings reflecting the names
+        memberList = map(lambda x:getattr(PostRequestMethods, x), memberListNames)
            
-            #filter out all but the methods of the member list (i.e. remove the variables)
-            callableMethodList = list(filter(callable,memberList))
+        #filter out all but the methods of the member list (i.e. remove the variables and builtins)
+        callableMethodList = list(filter(callable,memberList))
             
-            #grab the requested method
-            requestedMethod = list(filter(lambda x:x.__name__ == requestType, callableMethodList))[0]
+        #grab the requested method
+        requestedMethods = list(filter(lambda x:x.__name__ == requestType, callableMethodList))
 
-            #call it:
-            requestedMethod(self, form)
-
-        except IndexError:
-            print("Client attempted to call a method that doesn't exist: ", requestType)
-
+        if len(requestedMethods) != 1:
+            print("Client attempted to call a method that doesn't exist or has multiple matches: ", requestType)
+            return
+            
+        #call it:
+        requestedMethods[0](self, form)\
 
 def main():
     server = http.server.HTTPServer(('', 1080), MyRequestHandler)
@@ -52,4 +50,4 @@ def main():
     server.serve_forever()
 
 if __name__ == "__main__":
-    main()  
+    main() 
